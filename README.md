@@ -3,19 +3,41 @@
 Run script when dependency files change after branch checkout/switch or pull or merge.
 
 ## Install
-In terminal cd to project dir and
+```shell
+cd YOUR-PROJECT-PATH
+git clone git@github.com:emokykla/dependency-change-git-hook.git .git/hooks/dependency-change-git-hook
+composer --working-dir=.git/hooks/dependency-change-git-hook install --no-dev --optimize-autoloader
+.git/hooks/dependency-change-git-hook/bin/install
 ```
-cd .git/hooks/
-git clone https://github.com/emokykla/dependency-change-git-hook.git
-ls -s dependency-change-git-hook/post-checkout
-chmod +x post-checkout
-ls -s dependency-change-git-hook/post-merge
-chmod +x post-merge
-cp dependency-change-git-hook/post-composer-dependencies-update.sh .
-chmod +x post-composer-dependencies-update.sh
-cp dependency-change-git-hook/post-yarn-dependencies-update.sh .
-chmod +x post-yarn-dependencies-update.sh
+
+## Testing
+
+### Setup
+```shell
+git clone git@github.com:emokykla/dependency-change-git-hook.git --branch test-post-merge /tmp/git-test
+cd /tmp/git-test
+git clone git@github.com:emokykla/dependency-change-git-hook.git .git/hooks/dependency-change-git-hook
+composer --working-dir=.git/hooks/dependency-change-git-hook install --no-dev --optimize-autoloader
+.git/hooks/dependency-change-git-hook/bin/install --no-interaction
+git clone git@github.com:emokykla/dependency-change-git-hook.git --branch test-post-merge /tmp/git-test2
 ```
-Edit files to your likings:
-- .git/hooks/post-composer-dependencies-update.sh
-- .git/hooks/post-yarn-dependencies-update.sh
+
+### Test post merge
+```shell
+cd /tmp/git-test2
+echo -e "\n" >> package.json && echo -e "\n" >> composer.json && git ci -am 'test' && git push
+cd /tmp/git-test
+git pull
+```
+
+### Test post checkout
+```shell
+cd /tmp/git-test
+git checkout test-post-checkout1 && git checkout test-post-checkout2
+```
+
+### Cleanup
+```shell
+cd /tmp
+rm -rf /tmp/git-test/ /tmp/git-test2/
+```

@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require __DIR__.'/../vendor/autoload.php';
+
+use App\Command\InstallCommand;
+use App\Services\Hook\HookConfigurationService;
+use Symfony\Component\Console\Application;
+
+$application = new Application();
+$command = new InstallCommand(new HookConfigurationService());
+$application->add($command);
+$application->setDefaultCommand($command->getName(), true);
+$application->run();

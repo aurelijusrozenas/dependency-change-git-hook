@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require __DIR__.'/../vendor/autoload.php';
+
+use App\Command\PostMergeCommand;
+use Symfony\Component\Console\Application;
+
+$application = new Application();
+$command = new PostMergeCommand();
+$application->add($command);
+$application->setDefaultCommand($command->getName(), true);
+$application->run();
