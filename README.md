@@ -6,7 +6,7 @@ Run script when dependency files change after branch checkout/switch or pull or 
 ```shell
 cd YOUR-PROJECT-PATH
 git clone git@github.com:emokykla/dependency-change-git-hook.git .git/hooks/dependency-change-git-hook
-composer --working-dir=.git/hooks/dependency-change-git-hook install --no-dev --optimize-autoloader
+php8.0 $(which composer) --working-dir=.git/hooks/dependency-change-git-hook install --no-dev --optimize-autoloader
 .git/hooks/dependency-change-git-hook/bin/install
 ```
 
@@ -17,7 +17,7 @@ composer --working-dir=.git/hooks/dependency-change-git-hook install --no-dev --
 git clone git@github.com:emokykla/dependency-change-git-hook.git --branch test-post-merge /tmp/git-test
 cd /tmp/git-test
 git clone git@github.com:emokykla/dependency-change-git-hook.git .git/hooks/dependency-change-git-hook
-composer --working-dir=.git/hooks/dependency-change-git-hook install --no-dev --optimize-autoloader
+php8.0 $(which composer) --working-dir=.git/hooks/dependency-change-git-hook install --no-dev --optimize-autoloader
 .git/hooks/dependency-change-git-hook/bin/install --no-interaction
 git clone git@github.com:emokykla/dependency-change-git-hook.git --branch test-post-merge /tmp/git-test2
 ```
